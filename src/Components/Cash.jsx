@@ -18,7 +18,7 @@ const Cash = () => {
     return (
         <div>
             <h1>{cash}</h1>
-            <button onClick={() => getCash(Number(prompt()))}>GET</button>
+            <button onClick={() => getCash(Number(prompt('a?')))}>GET</button>
             <button onClick={() => addCash(Number(prompt()))}>ADD</button>
         </div>
     );
