@@ -7,6 +7,12 @@ const Customers = () => {
     const {customers} = useSelector(state => state.customers)
 
 
+   const getAllCustomers = () => {
+       fetch('https://jsonplaceholder.typicode.com/users')
+           .then(response => response.json())
+           .then(result => dispatch({type:"SET_CUSTOMERS", customers: result.map(res => res)}))
+   }
+
     const addCustomers = (name) => {
         const newCustomer = {
             name,
@@ -24,14 +30,21 @@ const Customers = () => {
     return (
         <div>
             <button onClick={() => addCustomers(prompt())}>ADD CUSTOMER</button>
-            {customers.map( customer => {
-                return (
-                    <div key={customer.id}>
-                        <h1>{customer.name}</h1>
-                        <button onClick={() => removeCustomers(customer.id)}>REMOVE CUSTOMER</button>
-                    </div>
-                )
-            })}
+            <button onClick={getAllCustomers}>GET ALL CUSTOMERS</button>
+            {customers.length > 0 ?
+                <>
+                    {customers.map( customer => {
+                        return (
+                            <div key={customer.id}>
+                                <h1>{customer.name}</h1>
+                                <button onClick={() => removeCustomers(customer.id)}>REMOVE CUSTOMER</button>
+                            </div>
+                        )
+                    })}
+                </>
+                :
+                <h2>Пользователи не найдены</h2>
+            }
         </div>
     );
 };
